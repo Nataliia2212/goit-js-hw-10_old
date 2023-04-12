@@ -2,9 +2,7 @@ import './css/styles.css';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
 import { fetchCountries } from "./fetchCountries";
-console.log('hello')
 
-console.log(fetchCountries)
 const DEBOUNCE_DELAY = 300;
 
 const refs = {
@@ -17,18 +15,18 @@ refs.input.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY))
 
 function onInputSearch(event) {
     const search = event.target.value.trim();
-    
-    if (search) {
-        fetchCountries(search).then(data => createMarkup(data))
-        refs.countryInfo.innerHTML = '';
-        refs.country.innerHTML = '';
-    }   
+    refs.countryInfo.innerHTML = '';
+    refs.country.innerHTML = '';
+    if (!search) {
+        return
+    }  
+    fetchCountries(search).then(data => createMarkup(data))
 }
 
-
-
-
 function createMarkup(arr) {
+    if (!arr) {
+        return
+    }
     if (arr.length>10) {
         Notify.info("Too many matches found. Please enter a more specific name.");
         return
@@ -43,7 +41,7 @@ function createMarkup(arr) {
             `).join('');
         
         refs.countryInfo.innerHTML = markup
-        refs.country.innerHTML = ''
+        
         return
     } 
     
@@ -53,8 +51,5 @@ function createMarkup(arr) {
         <h2>${item.name.official}</h2>
         </li>`).join('');
     
-    refs.country.innerHTML = markupCountries;
-    refs.countryInfo.innerHTML = '';
+    refs.country.innerHTML = markupCountries;  
 }
- 
-console.log('ok')
