@@ -18,3 +18,18 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.list {
+  list-style: none;
+}
+
+h2 {
+  display: inline-block;
+  margin-left: 15px;
+  font-size: 30px;
+}
+
+span {
+  margin-right: 10px;
+  font-weight: 700;
+}
